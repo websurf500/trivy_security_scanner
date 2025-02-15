@@ -14,19 +14,35 @@ sudo apt-get install trivy
 Trivy Basic Commands
 --------------------
 
+Trivy Basic Commands
+--------------------
+
 trivy image imagename
 
 trivy fs --security-checks vuln,config   Folder_name_OR_Path
 
-trivy image --severity HIGH,CRITICAL image_name
+trivy --severity HIGH,CRITICAL image <image_name>
 
-trivy image -f json -o results.json image_name
+trivy -f json -o results.json image <image_name>
+
+trivy -f table -o results.txt image <image_name>
 
 trivy repo repo-url
 
 trivy k8s --report summary cluster
 
+Note: -f denotes format type
+      -o denotes output type
 
+Pipeline Stage:
+----------------
+        stage('Trivy Scan') {
+            steps {
+//                sh 'trivy --severity HIGH,CRITICAL image maven-web-app1'
+                sh 'trivy --severity HIGH,CRITICAL -f table -o results.txt image maven-web-app1'
+            }
+        }
+        
 
 
 
